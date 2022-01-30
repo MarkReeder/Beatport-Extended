@@ -1,6 +1,7 @@
 let activeSortField = null;
 let activeSortDirection = 'asc';
 let previousHeader = null;
+const nextTrackKey = 'j';
 const trackHeaderPrefix = 'buk-track-';
 const trackHeaderColClass = 'bucket-track-header-col';
 const trackHeaderClass = 'bucket-track-header';
@@ -61,4 +62,18 @@ document.addEventListener('click', evt => {
     evt.target.style.fontWeight = 'bold';
     previousHeader = evt.target;
   }
-})
+});
+
+document.addEventListener('keydown', evt => {
+  if (evt.key === nextTrackKey) {
+    const trackPlayingItem = document.querySelector('.track.playing');
+    if (trackPlayingItem && !trackPlayingItem.nextElementSibling) {
+      const mo = new window.MutationObserver(() => {
+        document.querySelector('.bucket-items .bucket-item .track-play').click();
+        mo.disconnect();
+      })
+      mo.observe(document.querySelector('#pjax-inner-wrapper'), {childList: true, subtree: true});
+      document.querySelector('.pag-next').click();
+    }
+  }
+});
