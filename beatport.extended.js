@@ -70,6 +70,11 @@ document.addEventListener('keydown', evt => {
     if (!trackPlayingItem) {
       document.querySelector('.bucket-items .bucket-item .track-play').click();
     }
+    if (trackPlayingItem) {
+      if (Math.abs(window.scrollY - trackPlayingItem.offsetTop) > 0) {
+        window.scrollBy(0, trackPlayingItem.offsetTop - window.scrollY);
+      }
+    }
     if (trackPlayingItem && !trackPlayingItem.nextElementSibling) {
       const mo = new window.MutationObserver(() => {
         mo.disconnect();
